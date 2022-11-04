@@ -1,3 +1,1 @@
-hello
-world
-punk
+cat text.txt > out.txt

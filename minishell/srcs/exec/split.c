@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 12:35:16 by jtanner           #+#    #+#             */
+/*   Updated: 2022/11/02 12:35:17 by jtanner          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../mini.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -40,7 +52,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	ft_strnstr(const char *haystack, const char *needle, size_t len)
+int	ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 	size_t	c;
@@ -51,9 +63,9 @@ char	ft_strnstr(const char *haystack, const char *needle, size_t len)
 	i = 0;
 	finds = 0;
 	hay = (char *)haystack;
-	n_len = ft_strlen(needle);
+	n_len = len;
 	if (n_len == 0 || haystack == needle)
-		return (*needle);
+		return (1);
 	while (hay[i] != '\0' && i < len)
 	{
 		c = 0;
@@ -65,6 +77,6 @@ char	ft_strnstr(const char *haystack, const char *needle, size_t len)
 		i++;
 	}
 	if (finds > 0)
-		return (*needle);
+		return (1);
 	return (0);
 }

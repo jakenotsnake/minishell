@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 12:36:57 by jtanner           #+#    #+#             */
+/*   Updated: 2022/11/02 13:07:03 by jtanner          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../mini.h"
 
 char	**getpaths(char	**envp)
@@ -31,30 +43,35 @@ char	*findpath(char *cmd, char **envp)
 		if (access(path, F_OK) == 0)
 		{	
 			return (path);
+			free(path);
 		}
 		free(path);
 		i++;
 	}
 	freemult(paths);
-	return (0);
+	return (cmd);
 }
 
-void execute(t_commands *in)
+void	execute(t_commands *in)
 {
-	pid_t  pid;
-    int    status;
+	pid_t	pid;
+	int		status;
 
-    if ((pid = fork()) < 0)
-       error();
-    else if (pid == 0)
+	status = 0;
+	pid = fork();
+	if (pid == 0)
 	{
 		if (in->re[0] > 0)
 			checkredir(in);
-		if (!(execve(in->cmds[0], in->cmds, in->envp)))
-			error();
-		exit(1);
+		execve(in->cmds[0], in->cmds, in->envp);
+		if (errno == 2)
+			errno = 127;
+		error("Error: Command not found");
 	}
 	else
-        while (wait(&status) != pid)
-            ;
+		while (wait(&status) != pid)
+			;
+	g_exstat = WEXITSTATUS(status);
+	if (g_exstat != 0)
+		strerror(g_exstat);
 }

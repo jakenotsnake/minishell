@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 12:34:00 by jtanner           #+#    #+#             */
+/*   Updated: 2022/11/02 12:34:36 by jtanner          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../mini.h"
 
-char *jstrcpy(char *s, int st, int f)
+char	*jstrcpy(char *s, int st, int f)
 {
-	char *n;
-	int i;
+	char	*n;
+	int		i;
 
 	i = 0;
 	n = malloc(sizeof (char) * ((f - st) + 1));
@@ -19,7 +31,7 @@ char *jstrcpy(char *s, int st, int f)
 
 int	jstrlen(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -29,21 +41,22 @@ int	jstrlen(char *s)
 
 int	countwords(char *line)
 {
-	int i;
+	int	i;
 	int	c;
 
-	i  = 0;
+	i = 0;
 	c = 0;
 	while (line[i])
 	{
-		while ((line[i] != ' ' && line[i] != '\'' && line[i] != '\"') && line[i])
+		while ((line[i] != ' ' && line[i] != '\''
+				&& line[i] != '\"') && line[i])
 			i++;
 		c++;
 		if (!line[i])
-			break; 
+			break ;
 		if (line[i] == '\'' || line[i] == '\"')
 		{
-			i++;	
+			i++;
 			while (line[i] != '\'' && line[i] != '\"' && line[i])
 				i++;
 			c++;

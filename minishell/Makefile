@@ -6,7 +6,7 @@
 #    By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 13:11:13 by jtanner           #+#    #+#              #
-#    Updated: 2022/10/26 16:02:28 by jtanner          ###   ########.fr        #
+#    Updated: 2022/11/02 13:32:30 by jtanner          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME = minishell
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -g 
 RM = rm -f
-LINKS = -I./includes -lreadline -framework OpenGL \
-	   	-framework Appkit
+LINKS = -lreadline
+
+
 
 SRCS_DIR = srcs/
 
@@ -30,6 +31,9 @@ FILES = Main \
 		exec/split2 \
 		redir/redir \
 		redir/redirection \
+		builtins \
+		parse/question \
+		parse/read_utils \
 
 
 

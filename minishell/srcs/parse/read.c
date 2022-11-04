@@ -1,28 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 12:29:46 by jtanner           #+#    #+#             */
+/*   Updated: 2022/11/02 13:33:11 by jtanner          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../mini.h"
 
-char *input(void)
+void	cont(int sig)
 {
-	char *line;
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		exit(0);
+	}
+	if (sig == SIGQUIT)
+		return ;
+	if (sig == SIGTSTP || !rl_line_buffer)
+		exit(0);
+	(void)sig;
+}
 
-	line = (char *)NULL;
-	line = readline("Jakes Wolrd~: ");
+void	checknull(char *line)
+{
+	if (line == NULL)
+	{
+		printf("\n");
+		kill(0, SIGKILL);
+	}
+}
+
+void	prntproc(void)
+{
+	signal(SIGINT, &cont);
+	signal(SIGTSTP, &cont);
+}
+
+void	chldproc(pid_t pid, int *status)
+{
+	signal(SIGINT, &cont1);
+	signal(SIGQUIT, &cont1);
+	signal(SIGTSTP, &cont1);
+	while (wait(status) != pid)
+		;
+	g_exstat = *status;
+}
+
+char	*input(void)
+{
+	char			*line;
+	pid_t			pid;
+	static pid_t	kid;
+	int				status;
+
+	line = (char *) NULL;
+	pid = fork();
+	if (pid == kid)
+		exit(0);
+	else if (pid == 0)
+	{
+		line = readline("Jakes Wolrd~: ");
+		checknull(line);
+	}
+	else if (pid > 0)
+	{
+		kid = pid;
+		chldproc(pid, &status);
+	}
+	if (line && *line)
+		add_history(line);
 	return (line);
 }
-
-void search(t_commands *in)
-{
-	findredir(in);
-	findexe(in);
-	execute(in);
-}
-
-void findexe(t_commands *in)
-{
-	char	*buff;
-	int		i;
-
-	i = 0;
-	buff = in->cmds[0];
-	in->cmds[0] = findpath(buff, in->envp);
-}
-

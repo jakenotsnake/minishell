@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 12:23:35 by jtanner           #+#    #+#             */
+/*   Updated: 2022/11/02 12:23:59 by jtanner          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../mini.h"
 
-void findredir(t_commands *in)
+void	findredir(t_commands *in)
 {
 	int	i;
 
@@ -18,7 +30,7 @@ void findredir(t_commands *in)
 	in->re[i++] = 0;
 }
 
-void checkredir(t_commands *in)
+void	checkredir(t_commands *in)
 {
 	int	i;
 
@@ -27,8 +39,8 @@ void checkredir(t_commands *in)
 	{
 		if (in->cmds[in->re[i]][0] == '>' && in->cmds[in->re[i]][1] == '>')
 			reoutapp(in, i);
-	//	else if (in->cmds[in->re[i]][in->i] == '<' && in->cmds[in->s_ind][in->i + 1] == '<')
-	//		delinpt(in, i);
+		else if (in->cmds[in->re[i]][0] == '<' && in->cmds[in->re[i]][1] == '<')
+			delinpt(in, i);
 		else if (in->cmds[in->re[i]][0] == '>')
 			reout(in, i);
 		else if (in->cmds[in->re[i]][0] == '<')
