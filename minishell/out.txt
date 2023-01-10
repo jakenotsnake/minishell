@@ -1,1 +1,1 @@
-hi
+cat text.txt > out.txt

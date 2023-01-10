@@ -6,7 +6,7 @@
 /*   By: jtanner <jtanner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 12:29:46 by jtanner           #+#    #+#             */
-/*   Updated: 2022/11/02 13:33:11 by jtanner          ###   ########.fr       */
+/*   Updated: 2023/01/06 12:18:28 by jtanner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*input(void)
 		exit(0);
 	else if (pid == 0)
 	{
+		prntproc();
 		line = readline("Jakes Wolrd~: ");
 		checknull(line);
 	}
